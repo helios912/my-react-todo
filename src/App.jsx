@@ -8,17 +8,25 @@ function App() {
     const [data, setData] = useState([]);
     const [todoska, setTodoska] = useState('');
 
-    const todoCount = data.length;
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
         if (!todoska.trim()) return;
-        setData([...data, { id: uuidv4(), text: todoska }]);
+        setData([...data, { id: uuidv4(), text: todoska, completed: false }]);
         setTodoska('');
     };
     const handleDelete = (delItem) => {
         setData(data.filter((item) => item.id !== delItem.id));
     };
+    const handleToggle = (id) => {
+        setData((prev) =>
+            prev.map((todo) =>
+                todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+            ),
+        );
+    };
+    const unComlitedItems = data.filter((item) => !item.completed);
+    const todoCount = unComlitedItems.length;
 
     return (
         <>
@@ -34,7 +42,11 @@ function App() {
                     <button type="submit">Додати справу</button>
                 </form>
 
-                <TodoList data={data} toDelete={handleDelete} />
+                <TodoList
+                    data={data}
+                    toDelete={handleDelete}
+                    onToggle={handleToggle}
+                />
             </div>
             {todoCount > 0 && (
                 <p className="read-the-docs">

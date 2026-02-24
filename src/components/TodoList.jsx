@@ -1,6 +1,6 @@
 import TodoItem from './TodoItem';
 
-function TodoList({ data, toDelete }) {
+function TodoList({ data, toDelete, onToggle }) {
     return (
         <>
             <h3 className="todo-list__title">Список справ</h3>
@@ -15,6 +15,7 @@ function TodoList({ data, toDelete }) {
                                 todo={todo}
                                 index={index}
                                 toDelete={toDelete}
+                                onToggle={onToggle}
                             />
                         );
                     })
